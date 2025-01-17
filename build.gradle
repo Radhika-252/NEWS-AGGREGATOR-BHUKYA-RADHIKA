@@ -1,0 +1,41 @@
+plugins {
+//    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id "org.openjfx.javafxplugin" version "0.1.0"
+    id 'java'
+    id 'application'
+}
+
+group = 'org.example'
+version = ''
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.jsoup:jsoup:1.17.2'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.41.0'
+    implementation group: 'com.opencsv', name: 'opencsv', version: '5.9'
+}
+
+
+javafx {
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.base', 'javafx.swing', 'javafx.media', 'javafx.graphics']
+}
+
+application {
+    mainClass = 'group17.news_aggregator.gui.Main'
+}
+
+
+
+// for standalone executable jar file
+jar {
+    manifest {
+        attributes 'Main-Class': 'group17.news_aggregator.gui.Main'
+    }
+     duplicatesStrategy DuplicatesStrategy.EXCLUDE
+     from {
+         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+     }
+}
